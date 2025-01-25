@@ -12,19 +12,23 @@ void Rigidbody::addForce( const Vector2& force ) {
 
 void Rigidbody::update(float deltaTime) {
 
-	// Get the friction force 
-	Vector2 frictionForce = velocity.normalize() * ( -friction * mass * gravity );
+    if ( velocity.magnitude() > 0.0f ) {
+        Vector2 frictionForce = velocity.normalize() * (-friction * mass * gravity);
+        accel = accel + frictionForce / mass; // Add friction to the acceleration
+    }
 
-    // Apply friction force
-    velocity = velocity + frictionForce / mass;
-
-    // Update position and velocity based on acceleration
-    position = position + velocity * deltaTime;
+    // Update velocity based on acceleration
     velocity = velocity + accel * deltaTime;
 
-    // Stop the object if the velocity becomes very small
-    if (velocity.magnitude() < 0.01f) {
-        velocity = Vector2(0, 0); 
+    // Update position based on velocity
+    position = position + velocity * deltaTime;
+
+    // Reset acceleration after each update
+    accel = Vector2(0, 0);
+
+    // Set velocity to 0 if its to small
+    if ( velocity.magnitude() < 0.01f ) {
+        velocity = Vector2(0, 0);
     }
 
 }
