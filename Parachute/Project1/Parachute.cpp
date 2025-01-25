@@ -4,12 +4,22 @@
 #include <iostream>
 
 #include "SFML/Graphics.hpp"
+#include "Rigidbody.h"
 
 int main()
 {
 
     sf::RenderWindow current_window( sf::VideoMode(800, 800), "Test" );
     sf::Event e;
+
+    Rigidbody rigidbody( 1.0f, 0.8f, 9.81f ); // mass, friction, gravity
+    rigidbody.position = Vector2(400, 400);  // Initial position at the center of the screen
+
+    sf::CircleShape circle(20); // radius = 20
+    circle.setFillColor(sf::Color::Green);
+
+    Vector2 appliedForce(500, 0);  // Apply a force of 50 units to the right
+    rigidbody.addForce(appliedForce); 
 
     while ( current_window.isOpen() ) 
     {
@@ -21,6 +31,22 @@ int main()
                 current_window.close(); 
 
         }
+
+        rigidbody.update(0.016f);
+
+        // Set the circle's position based on the Rigidbody's position
+        circle.setPosition(rigidbody.position.x, rigidbody.position.y);
+
+        std::cout << rigidbody.accel << std::endl;
+
+        // Clear the window
+        current_window.clear();
+
+        // Draw the circle
+        current_window.draw(circle);
+
+        // Display everything we just rendered
+        current_window.display();
     }
 
 
