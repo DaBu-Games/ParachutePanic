@@ -8,11 +8,12 @@ class Rigidbody
 		Vector2 position; 
 		Vector2 velocity;
 		Vector2 accel;
-		Vector2 direction; 
+
+		Vector2 totalForce; 
 
 		float friction; // Can only be between 0 and 1
-		float mass; // Mass of the rigidbody
-		float gravity; // The gravity on the rigidbody 
+		float mass;
+		float gravity;
 
 		Rigidbody(float mass, float friction, float gravity);
 
