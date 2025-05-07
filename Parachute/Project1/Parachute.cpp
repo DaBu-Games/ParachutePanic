@@ -14,8 +14,7 @@ int main()
 
     sf::Clock clock; 
 
-    Rigidbody rigidbody( 1.0f, 0.8f, 1.0f ); // mass, friction, gravity
-    rigidbody.position = Vector2(400, 400); 
+    Rigidbody rigidbody( 1.0f, 0.0f, 1.0f, Vector2(400,400) ); // mass, friction, gravity, position
 
     sf::CircleShape circle(20);
     circle.setFillColor(sf::Color::Green);
@@ -32,11 +31,12 @@ int main()
         }
 
         float deltaTime = clock.restart().asSeconds();
-        rigidbody.addForce(Vector2(5, 10));
+        rigidbody.addForce(Vector2(1, 1));
         rigidbody.update(deltaTime);
 
+        Vector2 position = rigidbody.GetPosition(); 
         // Set the circle's position based on the Rigidbody's position
-        circle.setPosition(rigidbody.position.x, rigidbody.position.y);
+        circle.setPosition( position.x, position.y);
 
         std::cout << deltaTime << std::endl;
 
