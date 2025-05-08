@@ -5,17 +5,15 @@ Rigidbody::Rigidbody(const float& mass, const float& friction, const float& grav
 	friction(friction), mass(mass), gravity(gravity), position(position) {}
 
 void Rigidbody::addForce( const Vector2& force ) {
-    totalForce = Vector2(0, 0); 
     totalForce = totalForce + force;
 }
 
-void Rigidbody::update(float& deltaTime) {
-
+void Rigidbody::update(const float& deltaTime) {
     accel = totalForce / mass; 
 
     if ( velocity.magnitude() > 0.0f ) {
-        Vector2 frictionForce = velocity.normalize() * (-friction * mass * gravity);
-        accel = accel + frictionForce / mass; // Add friction to the acceleration
+         Vector2 dampingForce = velocity * (-friction);  // velocity-based damping
+        accel = accel + dampingForce;
     }
 
     velocity = velocity + accel * deltaTime;
@@ -27,7 +25,6 @@ void Rigidbody::update(float& deltaTime) {
     if ( velocity.magnitude() < 0.01f ) {
         velocity = Vector2(0, 0);
     }
-
 }
 
 Vector2& Rigidbody::GetPosition() {

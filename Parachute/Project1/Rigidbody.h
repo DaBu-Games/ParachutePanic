@@ -10,15 +10,14 @@ class Rigidbody
 		Vector2 accel;
 		Vector2 totalForce; 
 
-		float friction; // Can only be between 0 and 1
-		float mass;
-		float gravity;
+		const float friction; // Can only be between 0 and 1
+		const float mass;
+		const float gravity;
 
 	public:
 		Rigidbody(const float& mass, const float& friction, const float& gravity, const Vector2& position);
 		void addForce(const Vector2& force);
-		void update(float& deltaTime);
+		void update(const float& deltaTime);
 		Vector2& GetPosition();
-
 };
 

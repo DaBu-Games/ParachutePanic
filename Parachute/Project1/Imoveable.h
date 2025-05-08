@@ -6,7 +6,9 @@ class Imoveable
 {
 	public:
 		Rigidbody rb;
-		virtual void UpdateRigidbody(const float& deltaTime) = 0; 
-		virtual void AddRigidbodyForce(const Vector2& force) = 0; 
+		Imoveable(const float& mass, const float& friction, const float& gravity, const Vector2& position)
+			: rb(mass, friction, gravity, position) {
+		}
+		virtual void Move(const float& deltaTime) = 0; 
 };
 
