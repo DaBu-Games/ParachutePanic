@@ -27,6 +27,6 @@ void Rigidbody::update(const float& deltaTime) {
     }
 }
 
-Vector2& Rigidbody::GetPosition() {
+const Vector2& Rigidbody::GetPosition() const {
     return position;
 }

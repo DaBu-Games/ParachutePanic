@@ -18,6 +18,6 @@ class Rigidbody
 		Rigidbody(const float& mass, const float& friction, const float& gravity, const Vector2& position);
 		void addForce(const Vector2& force);
 		void update(const float& deltaTime);
-		Vector2& GetPosition();
+		const Vector2& GetPosition() const;
 };
 
