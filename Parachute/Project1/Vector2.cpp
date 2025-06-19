@@ -23,6 +23,13 @@ Vector2 Vector2::operator/(const float scaler) const {
 	return Vector2( x / scaler, y / scaler );
 }
 
+// Plus equals 
+Vector2 Vector2::operator+=(const Vector2& other){
+	x += other.x;
+	y += other.y;
+	return *this;
+}
+
 // Magnitude: sqrt of x2 + y2
 float Vector2::magnitude() const {
 	return std::sqrt( std::pow(x, 2) + std::pow(y, 2) );

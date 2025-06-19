@@ -1,33 +1,50 @@
 #include "Rigidbody.h"
 
-Rigidbody::Rigidbody( float friction, float mass, float gravity )
-	:	position(0, 0), velocity(0, 0), accel(0, 0),
-	friction(friction), mass(mass), gravity(gravity) {}
+Rigidbody::Rigidbody( float drag, float mass, const Vector2& position )
+	:   velocity(0, 0), forces(0, 0), drag(drag), mass(mass), position(position) {}
 
-void Rigidbody::addForce( const Vector2& force ) {
-
-	accel = accel + force / mass;
-
+void Rigidbody::AddForce(const Vector2& force) {
+    forces += force;
 }
 
-void Rigidbody::update(float deltaTime) {
+void Rigidbody::AddImpulse(const Vector2& impulse) {
+	impulses += impulse;
+}
 
-    if ( velocity.magnitude() > 0.0f ) {
-        Vector2 frictionForce = velocity.normalize() * (-friction * mass * gravity);
-        accel = accel + frictionForce / mass; // Add friction to the acceleration
+Vector2& Rigidbody::GetPosition() {
+    return position; 
+}
+
+void Rigidbody::ReverseVelocityX() {
+    velocity.x *= -1;
+}
+
+void Rigidbody::Update(float deltaTime) {
+	if (mass == 0.0f)
+		return;
+
+	Vector2 totalForce = forces;
+
+    if (velocity.magnitude() > 0.0f) {
+        totalForce += velocity.normalize() * -drag * velocity.magnitude();
     }
 
-    // Update velocity based on acceleration
-    velocity = velocity + accel * deltaTime;
+    Vector2 acceleration = totalForce / mass;
 
-    // Update position based on velocity
-    position = position + velocity * deltaTime;
+    velocity += acceleration * deltaTime;
+    velocity += impulses / mass;
 
-    // Reset acceleration after each update
-    accel = Vector2(0, 0);
+    float maxSpeed = 200.0f;
+    if (velocity.magnitude() > maxSpeed) {
+        velocity = velocity.normalize() * maxSpeed;
+    }
 
-    // Set velocity to 0 if its to small
-    if ( velocity.magnitude() < 0.01f ) {
+    position += velocity * deltaTime;
+
+    forces = Vector2(0, 0);
+    impulses = Vector2(0, 0);
+
+    if (velocity.magnitude() < 0.1f) {
         velocity = Vector2(0, 0);
     }
 

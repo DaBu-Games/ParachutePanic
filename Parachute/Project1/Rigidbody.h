@@ -1,23 +1,25 @@
 #pragma once
 
-#include "Vector2.h" 
+#include "Vector2.h"
 
 class Rigidbody
 {
-	public:
-		Vector2 position; 
+	private:
 		Vector2 velocity;
-		Vector2 accel;
-		Vector2 direction; 
+		Vector2 forces;
+		Vector2 impulses;
+		Vector2 position;
 
-		float friction; // Can only be between 0 and 1
-		float mass; // Mass of the rigidbody
-		float gravity; // The gravity on the rigidbody 
+		float drag;
+		float mass;
 
-		Rigidbody(float mass, float friction, float gravity);
+	public:
+		Rigidbody(float mass, float drag, const Vector2& position);
 
-		void addForce(const Vector2& force);
-		void update(float deltaTime);
-
+		void AddForce(const Vector2& force);
+		void AddImpulse(const Vector2& impulse); 
+		Vector2& GetPosition();
+		void ReverseVelocityX();
+		void Update(float deltaTime);
 };
 

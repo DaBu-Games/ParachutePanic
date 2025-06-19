@@ -140,11 +140,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemySpawner.cpp" />
+    <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="Object.cpp" />
     <ClCompile Include="Parachute.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Rigidbody.cpp" />
     <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemySpawner.h" />
+    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Rigidbody.h" />
     <ClInclude Include="Vector2.h" />
   </ItemGroup>
